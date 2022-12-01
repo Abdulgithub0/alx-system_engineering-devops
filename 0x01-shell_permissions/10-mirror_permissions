@@ -1,2 +1,3 @@
 #!/bin/bash
-chmod ugo-x o=r g+w hello olleh
+chmod --reference=olleh hello
+
