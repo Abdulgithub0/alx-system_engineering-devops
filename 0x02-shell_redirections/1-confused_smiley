@@ -1,2 +1,2 @@
 #!/bin/bash
-echo "\U0001F615\n"
+echo -e '"(Ôo)'\'
