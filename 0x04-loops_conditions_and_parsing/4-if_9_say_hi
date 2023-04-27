@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # This script is displaying "Best School" 10 times and "Hi" 1 time.
 declare -i num=0
-until ((num == 10));
+while ((num < 10));
 do
 	echo "Best School"
 	if ((num == 8));
