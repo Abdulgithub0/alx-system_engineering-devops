@@ -6,5 +6,5 @@
 CONTENT="$(ls -1)"
 for i in $CONTENT;
 do
-	echo "$(cut -d'-' -f2- <<< "$i")"
+	echo "$i" | cut -d'-' -f2-
 done
