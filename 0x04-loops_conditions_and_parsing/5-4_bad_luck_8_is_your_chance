@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# This script is displaying "Best School" 10 times and "Hi" 1 time.
+declare -i num=0
+while ((num < 10));
+do
+	if ((num == 7));
+	then
+		echo "good luck"
+	elif ((num == 3))
+	then
+		echo "bad luck"
+	else
+		echo "Best School"
+	fi
+	((num++));
+done
