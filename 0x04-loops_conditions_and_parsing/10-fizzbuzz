@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+#Bash script that displays numbers from 1 to 100.
+
+declare -i num=1
+while ((num < 101));
+do
+	declare -i mod3=$((num % 3))
+	declare -i mod5=$((num % 5))
+	if ((mod5 == 0)) && ((mod3 == 0))
+	then
+		echo "FizzBuzz"
+	elif ((mod3 == 0))
+	then
+		echo "Fizz"
+	elif ((mod5 == 0))
+	then
+		echo "Buzz"
+	else
+		echo $num
+	fi
+	((num++));
+done
