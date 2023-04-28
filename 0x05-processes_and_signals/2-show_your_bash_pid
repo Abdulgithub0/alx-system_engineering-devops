@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+#A script that display all users running process id with their details
+# shellcheck disable=SC2009
+ps -aux | grep "bash"
