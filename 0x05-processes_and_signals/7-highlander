@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+#A script that run till infinity and stop when it recieve the default signal -15 aka SIGTERM
+until ((2 == 4));
+do
+	echo "To infinity and beyond"
+	sleep 2
+	trap 'echo "I am invincible!!!"' SIGTERM
+done
