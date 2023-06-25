@@ -1,0 +1,10 @@
+# This manifests create a used puppet resource to create file called school in /tmp dir
+
+file { 'create the file /tmp/school':
+  ensure  => 'file',
+  path    => '/tmp/school',
+  mode    => '0744',
+  owner   => 'www-data',
+  group   => 'www-data',
+  content => 'I Love Puppet',
+}
