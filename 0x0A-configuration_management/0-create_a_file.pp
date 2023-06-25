@@ -1,4 +1,4 @@
-# This manifests create a used puppet resource to create file called school in /tmp dir
+# This manifests  create file called school in /tmp dir
 
 file { 'create the file /tmp/school':
   ensure  => 'file',
