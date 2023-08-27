@@ -1,14 +1,15 @@
 # Configure SSH client to use the private key
 # Configure SSH client to refuse authenticate
+class { '::stdlib': }
 
 file_line {'used_school_as_pk':
 	ensure => 'present',
-	path   => '~/.ssh/config',
+	path   => '/etc/ssh/ssh_config',
 	line   => '    IdentityFile ~/.ssh/school',
 }
 
 file_line {'disable_pw_format':
 	ensure	=> 'present',
-	path	=> '~/.ssh/config',
+	path	=> '/etc/ssh/ssh_config',
 	line   	=> '    PasswordAuthentication no',
 }
