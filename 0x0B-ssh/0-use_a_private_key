@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 # a Bash script that uses ssh to connect to your server using the private key
-# connect to a remote server
+# connect to a remote server google dns
 
 ssh -i ~/.ssh/school ubuntu@8.8.8.8
