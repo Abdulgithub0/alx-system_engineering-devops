@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 # a Bash script that uses ssh to connect to your server using the private key
-# connect to a remote server 54.157.184.193
+# connect to a remote server 35.153.18.178
 
-ssh -i ~/.ssh/school ubuntu@54.157.184.193
+ssh -i ~/.ssh/school ubuntu@35.153.18.178

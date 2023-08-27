@@ -1,0 +1,7 @@
+# configure SSH client to use the private key name school
+# Configure SSH client to refuse authenticate using a password 
+Host alx
+	HostName 35.153.18.178
+	User ubuntu
+        IdentityFile ~/.ssh/school
+        PasswordAuthentication no                                      
