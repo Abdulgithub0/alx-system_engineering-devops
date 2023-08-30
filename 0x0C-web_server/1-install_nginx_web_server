@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Install nginx on web-01 with some simple configuration changes to the listen port and default server block
 
-sudo get-apt update -y
-sudo get-apt install nginx -y
+sudo apt-get update -y
+sudo apt-get install nginx -y
 sed -i 's/8080/80/g' /etc/nginx/sites-enabled/default
 echo "Hello World!" >/var/www/html/index.html
 service nginx start
