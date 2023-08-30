@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Install nginx on web-01 with some simple configuration changes to the listen port and default server block
+
+sudo apt-get update -y
+sudo apt-get install nginx -y
+sed -i 's/8080/80/g' /etc/nginx/sites-enabled/default
+echo "Hello World!" >/var/www/html/index.html
+
+#copy the content of default server  to default_backup
+cp /etc/nginx/sites-available/default /etc/nginx/sites-available/default_backup
+
+#add location block whose match must be exactly "redirect_me"
+location="\\\n\tlocation = /redirect_me {\n\t\t return 301 https://www.alxafrica.com;\n\t}\n"
+
+# add additional location directive with value "redirect_me" to default nginx server.
+sed -i "53i $location" /etc/nginx/sites-available/default
+
+sudo service nginx start
+sudo service nginx enable
