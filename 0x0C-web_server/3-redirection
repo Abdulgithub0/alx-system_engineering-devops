@@ -9,9 +9,9 @@ fi
 
 sed -i 's/8080/80/g' /etc/nginx/sites-enabled/default
 echo "Hello World!" >/var/www/html/index.html
-
+av="/etc/nginx/sites-available/default_backup"
 #copy the content of default server  to default_backup
-if [ ! -e "/etc/nginx/sites-available/default_backup"]; then
+if [ ! -e "$av" ]; then
 	cp /etc/nginx/sites-available/default /etc/nginx/sites-available/default_backup
 fi
 
