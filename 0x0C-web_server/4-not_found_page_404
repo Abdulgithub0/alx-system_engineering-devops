@@ -1,31 +1,26 @@
 #!/usr/bin/env bash
 # Install nginx on web-01 with some simple configuration changes to the listen port and default server block
+
 if ! dpkg -l | grep -q nginx; then
     apt-get update
     apt-get install -y nginx
-    sudo nginx -s start
-    sudo nginx -s enable
 fi
 
 sed -i 's/8080/80/g' /etc/nginx/sites-enabled/default
 echo "Hello World!" >/var/www/html/index.html
 
 #copy the content of default server  to default_backup
-if [ ! -e "/etc/nginx/sites-available/default_backup"]; then
-	cp /etc/nginx/sites-available/default /etc/nginx/sites-available/default_backup
-fi
+cp /etc/nginx/sites-available/default /etc/nginx/sites-available/default_backup
 
 #add location block whose match must be exactly "redirect_me"
-
 location="\\\n\tlocation = /redirect_me {\n\t\t return 301 https://www.alxafrica.com;\n\t}\n"
-default_server="/etc/nginx/sites-enabled/default"
 
-if [ -e "$default_server" ]; then
-	sudo rm $default_server
-fi
+echo "Ceci n'est pas une page" >var/www/html/err.html
+err="\\\n\terror_page 404 /err.html;\n\n\tlocation = /err.html {\n\t\tinternal;\n\t}\n"
 
-sudo touch $default_server
-sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
-sed -i "53i $location" /etc/nginx/sites-enabled/default
+# add additional location directive with value "redirect_me" to default nginx server.
+sudo sed -i "53i $location" /etc/nginx/sites-available/default
+sudo sed -i "58i $err" /etc/nginx/sites-available/default
 
-sudo nginx -s reload
+sudo service nginx restart
+#sudo service nginx enable
