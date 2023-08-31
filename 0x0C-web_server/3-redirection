@@ -1,33 +1,22 @@
 #!/usr/bin/env bash
-# Install nginx on web-01 with some simple configuration changes to the listen port and default server block
-if ! dpkg -l | grep -q nginx; then
-    sudo apt-get update
-    sudo apt-get install -y nginx
-fi
-sudo service nginx start
-sed -i 's/8080/80/g' /etc/nginx/sites-enabled/default
-echo "Hello World!" >/var/www/html/index.html
+# A bash script that installs nginx server on an ubuntu os
+# Update package list
+sudo apt-get update -y
 
-av="/etc/nginx/sites-available/default_backup"
+# Install nginx
+sudo apt-get install nginx -y
 
-# copy the content of default server to default_backup
-if [ ! -e "$av" ]; then
-    cp /etc/nginx/sites-available/default /etc/nginx/sites-available/default_backup
-fi
+# Create "Hello World!" index file using tee
+echo "Hello World!" | sudo tee /var/www/html/index.html
 
-# add location block whose match must be exactly "redirect_me"
-location="location = /redirect_me {\n\treturn 301 https://www.alxafrica.com;\n}\n"
+# Backup the default configuration file
+sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/default_backup
 
-default_server="/etc/nginx/sites-enabled/default"
+# Define new location rule for redirection
+value="\\\tlocation = /redirect_me {\n\\t\treturn 301 https://alxafrica.com;\n\\t}\n"
 
-if [ -e "$default_server" ]; then
-    sudo rm "$default_server"
-fi
+# Add the new redirection rule to the default configuration
+sudo sed -i "53i $value" /etc/nginx/sites-available/default
 
-sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
-sudo nginx -s reload
-
-# Append the location block to the default configuration file
-cat <<EOT >> /etc/nginx/sites-enabled/default
-$location
-EOT
+# Restart nginx to apply the changes
+sudo service nginx restart
