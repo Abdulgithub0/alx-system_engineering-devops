@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # Install nginx on web-01 with some simple configuration changes to the listen port and default server block
 if ! dpkg -l | grep -q nginx; then
     sudo apt-get update
