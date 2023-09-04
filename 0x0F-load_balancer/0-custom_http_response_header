@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+#Replicate an exact setup configuration of 212691-web-01 for 212691-web-02 also
+#configure nginx on both servers to have an header response value that reference the
+# either name of the server that response to a user request
+
+#bring the server to date and install nginx
+if [ ! $(dpkg -l | grep -q "nginx") ]; then
+	sudo apt-get update
+	sudo apt-get install nginx -y
+fi
+mkdir -p /var/www/html
+sudo echo "Hello World!" >/var/www/html/index.html
+sudo echo "Ceci n'est pas une page" >/var/www/html/error.html
+
+if [ ! -e /etc/nginx/sites-available/default_copy ]; then
+	sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/default_copy
+fi
+
+content=$(cat <<EOF
+server {
+	add_header X-Served-By "$(hostname)";
+	listen 8000 default_server;
+	listen [::]:8000 default_server;
+
+	root /var/www/html;
+
+	server_name _;
+
+	location / {
+		try_files $uri, $uri/ not_found;
+	}
+
+	location =/redirect {
+		return 301 https://www.alxafrica.com
+	}
+
+	location @not_found {
+		internal;
+		error_page 404 /error.html;
+	}
+}
+
+EOF
+)
+
+sudo echo "$content" >/etc/nginx/sites-available/default
+
+sudo service nginx start
