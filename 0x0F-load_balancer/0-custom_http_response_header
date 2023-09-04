@@ -44,5 +44,5 @@ EOF
 )
 
 sudo echo "$content" >/etc/nginx/sites-available/default
-sudo servicr nginx start
+sudo service nginx start
 sudo service nginx restart
