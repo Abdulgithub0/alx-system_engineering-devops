@@ -27,11 +27,11 @@ server {
 	server_name _;
 
 	location / {
-		try_files /index.html /not_found;
+		try_files $uri $url/ /not_found;
 	}
 
 	location =/redirect {
-		return 301 https://www.alxafrica.com
+		return 301 https://www.alxafrica.com;
 	}
 
 	location @not_found {
