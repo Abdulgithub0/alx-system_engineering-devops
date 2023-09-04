@@ -27,7 +27,7 @@ server {
 	server_name _;
 
 	location / {
-		try_files url $uri/ @not_found;
+		try_files uri $uri/ @not_found;
 	}
 
 	location =/redirect {
