@@ -26,15 +26,13 @@ server {
 
 	server_name _;
 
-	location / {
-		try_files $uri $uri/ @not_found;
-	}
 
 	location =/redirect {
 		return 301 https://www.alxafrica.com;
 	}
-
-	location @not_found {
+	
+	error_page 404 /error.html;
+	location /404 {
 		internal;
 		error_page 404 /error.html;
 	}
@@ -44,5 +42,4 @@ EOF
 )
 
 sudo echo "$content" >/etc/nginx/sites-available/default
-sudo service nginx start
 sudo service nginx restart
