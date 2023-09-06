@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
 # Nginx must be running, and listening on port 80 of all the server�~@~Ys active IPv4 IPs
-if "$(dpkg -l | grep -q nginx)"; then
-        if [ "$(sudo service nginx status)" ]; then
-                echo "starting nginx..."
-                sudo service nginx start
-        fi
-        sudo ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
-        sudo service nginx restart
-fi
+
+sudo ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+sudo service nginx restart
