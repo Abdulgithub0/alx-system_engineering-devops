@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# install and configure HAproxy on lb-01 server (a load balancer server).
+
+# add to ppa list and update and install haproxy 2.8
+if [ ! $(dpkg -l | grep -q "haproxy") ]; then
+	sudo apt-get -y install --no-install-recommends software-properties-common
+ 	sudo add-apt-repository -y ppa:vbernat/haproxy-2.8
+	sudo apt-get update
+	sudo apt-get -y install haproxy=2.8.\*
+fi
+
+# startup haproxy during the server boot up - init.d 
+echo "ENABLED=1" | sudo tee -a /etc/default/haproxy > /dev/null
+
+# rename default haproxy.cfg
+if [ -e /etc/haproxy/haproxy.cfg ]; then
+	sudo mv /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy_default
+fi
+
+content=$(cat <<EOF
+	frontend plexusdev_server
+		bind *:80
+		timeout client 50000
+		mode http
+		default_backend myServers
+	
+	backend myServers
+		timeout connect 5000
+		timeout server 50000
+		mode http
+		balance roundrobin
+		server 212691-web-01 35.153.18.178:80
+		server 212691-web-02 52.201.158.90:80
+EOF
+)
+
+sudo echo "$content" | sudo tee /etc/haproxy/haproxy.cfg >dev/null
+
+# service haproxy start
+service haproxy	restart	
