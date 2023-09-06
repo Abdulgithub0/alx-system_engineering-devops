@@ -7,7 +7,7 @@
 	
 	package {'nginx':
 		provider => 'apt';
-		command => 'present';
+		ensure => 'installed';
 	} ->
 	
 	service {'nginx':
