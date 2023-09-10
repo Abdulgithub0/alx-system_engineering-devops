@@ -6,16 +6,15 @@ all_subdomains=("www" "lb-01" "web-01" "web-02")
 function default_call(){
 	local domain="$1"
 	for sub in "${all_subdomains[@]}"; do
-		dig "$sub.$domain" | grep -A1 "ANSWER SECTION:" | awk -v subst="$sub"'NR == 2 \
-		{printf"The subdomain %s is a %s record and points to %s\n", subst, $4, $5}'
+		dig "$sub.$domain" | grep -A1 "ANSWER SECTION:" | awk -v subt="$sub" 'NR == 2 \
+		{printf"The subdomain %s is a %s record and points to %s\n", subt, $4, $5}'
 	done
 }
 
 function specific_call(){
 	local domain="$1"
 	sub="$2"
-	subst="$2"
-	dig "$sub.$domain" | grep -A1 'ANSWER SECTION:' | awk 'FNR == 2 \
+	dig "$sub.$domain" | grep -A1 'ANSWER SECTION:' | awk -v subst="$2" 'FNR == 2 \
 	{printf"The subdomain %s is a %s record and points to %s\n", subst, $4, $5}'
 }
 
