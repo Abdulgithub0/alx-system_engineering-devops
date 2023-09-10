@@ -6,9 +6,8 @@ all_subdomains=("www" "lb-01" "web-01" "web-02")
 function default_call(){
 	local domain="$1"
 	for sub in "${all_subdomains[@]}"; do
-		subt="${sub}"
-		dig "$sub.$domain" | grep -A1 "ANSWER SECTION:" | awk 'NR == 2 \
-		{printf"The subdomain %s is a %s record and points to %s\n", subt, $4, $5}'
+		dig "$sub.$domain" | grep -A1 "ANSWER SECTION:" | awk -v subst="$sub"'NR == 2 \
+		{printf"The subdomain %s is a %s record and points to %s\n", subst, $4, $5}'
 	done
 }
 
