@@ -5,7 +5,7 @@ frontend plexusdev_server
         default_backend myServers
 
 frontend plexusdev_https
-	bind *:443 ssl crt /etc/letsencrypt/live/www.plexusdev.tech/fullchain.pem
+	bind *:443 ssl crt /etc/haproxy/www_subdomaincert/plexusdev_cert.pem
 	timeout client 50000
 	default_backend myServers
         
