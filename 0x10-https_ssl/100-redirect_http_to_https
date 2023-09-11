@@ -1,0 +1,20 @@
+frontend plexusdev_server
+	bind *:80
+	http-request redirect scheme https code 301 if { ssl_fc }
+        timeout client 50000
+        mode http
+        default_backend myServers
+
+frontend plexusdev_https
+	bind *:443 ssl crt /etc/haproxy/www_subdomaincert/plexusdev_cert.pem
+	timeout client 50000
+	default_backend myServers
+        
+backend myServers
+        timeout connect 5000
+        timeout server 50000
+        mode http
+        balance roundrobin
+        server 212691-web-01 35.153.18.178:80
+        server 212691-web-02 52.201.158.90:80
+
