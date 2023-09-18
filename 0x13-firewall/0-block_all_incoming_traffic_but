@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# install the ufw firewall and setup a few rules on the host
+if ! dpkg -l | grep -q "ufw"; then
+	sudo apt-get update
+	sudo apt-get -y install ufw
+fi
+
+# set ACL and default policies
+sudo ufw default allow outgoing
+sudo ufw allow 22/tcp
+sudo ufw allow 443/tcp
+sudo ufw allow 80/tcp
+sudo ufw default deny incoming
+
+# launch ufw
+sudo ufw enable
