@@ -13,14 +13,14 @@
         TASK_TITLE (with 1 tabulation and 1 space before the TASK_TITLE)
 """
 
-from sys import argv
 import requests as req
+import sys
 
 
-def user_progress(argv) -> None:
+def user_progress(arg) -> None:
     """display a user details and todos list progress"""
     try:
-        id_ = int(argv[1])
+        id_ = int(arg[1])
         # get user detail  overview
         resp = req.get(f"https://jsonplaceholder.typicode.com/users/{id_}")
         name = resp.json()['name']
@@ -32,8 +32,7 @@ def user_progress(argv) -> None:
         for todo in todos:
             if todo["completed"]:
                 complete += 1
-        not_com = total_len - complete
-        print(f"Employee {name} is done with tasks({complete}/{not_com}):")
+        print(f"Employee {name} is done with tasks({complete}/{total_len}):")
         for todo in todos:
             print(f"\t {todo['title']}")
     except Exception as e:
@@ -42,4 +41,4 @@ def user_progress(argv) -> None:
 
 if __name__ == "__main__":
     """launch program"""
-    user_progress(argv)
+    user_progress(sys.argv)
