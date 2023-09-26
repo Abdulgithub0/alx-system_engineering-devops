@@ -33,8 +33,7 @@ def user_progress(arg) -> None:
             if todo["completed"]:
                 complete += 1
         print(f"Employee {name} is done with tasks({complete}/{total_len}):")
-        for todo in todos:
-            print(f"\t {todo['title']}")
+        [print("\t {}".format(t['title'])) for t in todos] 
     except Exception as e:
         pass
 
