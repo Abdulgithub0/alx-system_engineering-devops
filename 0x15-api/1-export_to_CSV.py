@@ -28,7 +28,7 @@ def user_progress(arg) -> None:
         with open(filename, 'w', newline='') as f:
             write = csv.writer(f, quoting=csv.QUOTE_ALL)
             for todo in todos:
-                write.writerow([id_, user, todo['completed'], todo['title']]) 
+                write.writerow([id_, user, todo['completed'], todo['title']])
     except Exception as e:
         pass
 
