@@ -17,29 +17,30 @@ import requests as req
 def user_progress() -> None:
     """display a user details and todos list status"""
     try:
-        # get user detail overview
+        # get all users
         resp = req.get(f"https://jsonplaceholder.typicode.com/users")
         all_user = resp.json()
         # get todos list details for each users
         filename = "todo_all_employees.json"
-        with open(filename, 'w', newline='') as f:
+        new_json = {}
+        with open(filename, 'w') as f:
             for u in all_user:
-                name = u.get("username")
-                id_ = u.get("id")
-                url = f"https://jsonplaceholder.typicode.com/user/{id_}todos"
+                name = u["username"]
+                id_ = u["id"]
+                url = f"https://jsonplaceholder.typicode.com/users/{id_}/todos"
                 todos = req.get(url)
                 todos = todos.json()
-                id_ = str(id_)
-                new_json = {id_: []}
+                print(todos)
+                new_json[id_] = []
                 for t in todos:
                     new_json[id_].append({
                                          "username": name,
-                                         "task": t.get("title"),
-                                         "completed": t.get("completed")
+                                         "task": t.get("title", "not"),
+                                         "completed": t.get("completed", "not")
                                          })
             json.dump(new_json, f)
     except Exception as e:
-        print(e)
+        pass
 
 
 if __name__ == "__main__":
