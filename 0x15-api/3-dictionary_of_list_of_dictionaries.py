@@ -30,7 +30,6 @@ def user_progress() -> None:
                 url = f"https://jsonplaceholder.typicode.com/users/{id_}/todos"
                 todos = req.get(url)
                 todos = todos.json()
-                print(todos)
                 new_json[id_] = []
                 for t in todos:
                     new_json[id_].append({
