@@ -38,4 +38,4 @@ def count_words(subreddit, word_list=[], hot_list=[],
                 dic[kw] = 0
                 for word in hot_list:
                     dic[kw] += word.split().count(kw)
-        [print(k + ': ', v) for k, v in dic.items() if v != 0]
+        [print(k + ':', v) for k, v in dic.items() if v != 0]
