@@ -24,7 +24,7 @@ def count_words(subreddit, word_list=[], hot_list=[],
             args["after"] = parent_data["after"]
             args["count"] += parent_data["dist"]
             for data in children_data:
-                hot_list.append(data.get("data").get("title"))
+                hot_list.append(data.get("data").get("title").lower())
         except Exception as e:
             pass
     if args.get("after"):
