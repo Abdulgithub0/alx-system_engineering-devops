@@ -15,7 +15,8 @@ def top_ten(subreddit):
         try:
             children = resp.json().get("data").get("children")
             for data in children:
-                print(data.get("data").get("title"))
+               print(data.get("data").get("title"))
+            return
         except Exception as e:
             pass
     print(None)
