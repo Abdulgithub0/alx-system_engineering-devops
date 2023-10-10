@@ -23,7 +23,8 @@ def recurse(subreddit, hot_list=[],
             for data in children_data:
                 hot_list.append(data.get("data").get("title"))
         except Exception as e:
-            print(e)
+            pass
     if args.get("after"):
         recurse(subreddit, hot_list, args)
-    return hot_list
+    r = hot_list if len(hot_list) != 0 else None
+    return r
