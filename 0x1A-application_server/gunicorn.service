@@ -1,5 +1,5 @@
 [Unit]
-Description=Gunicorn instance to serve your Flask application
+Description=Gunicorn instance to serve Airbnb_clone Flask application
 After=network.target
 
 [Service]
