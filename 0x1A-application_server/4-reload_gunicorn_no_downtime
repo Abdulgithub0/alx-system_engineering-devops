@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-#gracefully reload the gunicorn process
+#gracefully reload the gunicorn worker processes
 
 get_pid=$(pprep -of "gunicorn")
-if "$get_pid"; then
+if [ -n "$get_pid" ]; then
 	kill -HUP "$get_pid"
 fi
