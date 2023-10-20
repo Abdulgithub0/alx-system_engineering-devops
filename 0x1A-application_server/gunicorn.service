@@ -1,0 +1,26 @@
+Unit]
+Description=a gunicorn daemon wrapped for flask app
+After=network.target
+
+[Service]
+Type=notify
+User=ubuntu
+Group=www-data
+RuntimeDirectory=gunicorn
+WorkingDirectory=/home/ubuntu/AirBnb_clone_v4/
+ExecStart=/home/ubuntu/.local/bin/gunicorn --bind 127.0.0.1:5003 \
+-w 3 -t 120 -k gevent -e /tmp/airbnb-error.log --access-logfile /tmp/airbnb-access.log \
+--env HBNB_MYSQL_USER=hbnb_dev \
+--env HBNB_MYSQL_PWD=hbnb_dev_pwd \
+--env HBNB_MYSQL_HOST=localhost \
+--env HBNB_MYSQL_DB=hbnb_dev_db \
+--env HBNB_TYPE_STORAGE=db \
+web_dynamic.2-hbnb:app
+ExecStop=/bin/kill -s TERM $MAINPID
+ExecReload=/bin/kill -s HUP $MAINPID
+KillMode=mixed
+TimeoutStopSec=5
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
